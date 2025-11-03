@@ -145,9 +145,9 @@ sudo apt-get install -y -qq python3.12 python3.12-venv python3.12-dev build-esse
   pip install --upgrade pip setuptools wheel &> /dev/null
 
   echo "Pre-installing Cython and PyYAML..."
-  pip install cython
-  pip install pyyaml
-
+pip install cython
+pip install pyyaml
+  
   # Proceed to install the cli package
   echo "Installing CRMint CLI package..."
   pip install --quiet --config-settings editable_mode=compat -e cli/
