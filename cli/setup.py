@@ -36,7 +36,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Click==8.0.4',
-        'pyyaml==6.0',
+        'pyyaml>=6.0',
         'requests==2.24.0',
     ],
     tests_require=test_deps,
