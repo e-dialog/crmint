@@ -150,8 +150,8 @@ pip install pyyaml
   
   # Proceed to install the cli package
   echo "Installing CRMint CLI package..."
-  pip install --quiet --config-settings editable_mode=compat -e cli/
-}
+  pip install --quiet --no-build-isolation --config-settings editable_mode=compat -e cli/
+  }
 
 # Function to add wrapper function to .bashrc
 function add_wrapper_function_to_bashrc() {
