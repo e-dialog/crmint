@@ -144,13 +144,9 @@ sudo apt-get install -y -qq python3.12 python3.12-venv python3.12-dev build-esse
   echo "Upgrading pip, setuptools, and wheel..."
   pip install --upgrade pip setuptools wheel &> /dev/null
 
-  echo "Pre-installing Cython and PyYAML..."
-pip install cython
-pip install pyyaml
-  
   # Proceed to install the cli package
   echo "Installing CRMint CLI package..."
-  pip install --quiet --no-build-isolation --no-use-pep517 -e cli/
+  pip install --quiet --config-settings editable_mode=compat -e cli/
   }
 
 # Function to add wrapper function to .bashrc
