@@ -123,7 +123,7 @@ function install_command_line() {
   sudo apt-get install -y software-properties-common
   sudo add-apt-repository ppa:deadsnakes/ppa -y &> /dev/null
   sudo apt-get update -qq
-  sudo apt-get install -y -qq python3.12 python3.12-venv python3.12-dev
+sudo apt-get install -y -qq python3.12 python3.12-venv python3.12-dev build-essential
 
   # Verify Python 3.12 installation
   if ! command -v python3.12 &> /dev/null; then
@@ -143,6 +143,10 @@ function install_command_line() {
   # Upgrade pip, setuptools, and wheel
   echo "Upgrading pip, setuptools, and wheel..."
   pip install --upgrade pip setuptools wheel &> /dev/null
+
+  echo "Pre-installing Cython and PyYAML..."
+  pip install cython
+  pip install pyyaml
 
   # Proceed to install the cli package
   echo "Installing CRMint CLI package..."
