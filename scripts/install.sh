@@ -85,7 +85,7 @@ function parse_command_line_arguments() {
 
 # Function to clone and checkout repository
 function clone_and_checkout_repository() {
-  TARGET_REPO_URL="https://github.com/instant-bqml/crmint.git"
+  TARGET_REPO_URL="https://github.com/e-dialog/crmint.git"
   TARGET_REPO_NAME="crmint"
   CLONE_DIR="$HOME/$TARGET_REPO_NAME"
 
@@ -133,7 +133,7 @@ function install_command_line() {
   echo "Python 3.12 version: $(python3.12 --version)"
 
   # Create virtual environment using Python 3.9
-  echo "Creating virtual environment with Python 3.9..."
+  echo "Creating virtual environment with Python 3.12..."
   python3.12 -m venv .venv
 
   # Activate the virtual environment
