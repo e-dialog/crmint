@@ -48,8 +48,13 @@ def shutdown_handler(sig: int, frame: types.FrameType) -> None:
   crmint_logging.log_global_message(
       'Signal received, safely shutting down.',
       log_level='WARNING')
+# ... (inside shutdown_handler)
   message.shutdown()
-  database.shutdown(app)
+
+  # Create an app context so database.shutdown() can access the database
+  with app.app_context():
+      database.shutdown(app)
+
   sys.exit(0)
 
 
