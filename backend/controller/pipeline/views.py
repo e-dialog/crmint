@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+#       http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -341,14 +341,18 @@ class PipelineRunOnSchedule(Resource):
     return pipeline
 
 
+# --- START OF FIX ---
+# Added location='args' to all arguments to force
+# the parser to look only in the query string.
 log_parser = reqparse.RequestParser()
-log_parser.add_argument('next_page_token')
-log_parser.add_argument('worker_class')
-log_parser.add_argument('job_id')
-log_parser.add_argument('log_level')
-log_parser.add_argument('query')
-log_parser.add_argument('fromdate')
-log_parser.add_argument('todate')
+log_parser.add_argument('next_page_token', location='args')
+log_parser.add_argument('worker_class', location='args')
+log_parser.add_argument('job_id', location='args')
+log_parser.add_argument('log_level', location='args')
+log_parser.add_argument('query', location='args')
+log_parser.add_argument('fromdate', location='args')
+log_parser.add_argument('todate', location='args')
+# --- END OF FIX ---
 
 log_fields = {
     'timestamp': fields.String,
