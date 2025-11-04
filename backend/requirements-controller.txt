@@ -60,7 +60,7 @@ google-cloud-appengine-logging==1.1.4
     # via google-cloud-logging
 google-cloud-audit-log==0.2.4
     # via google-cloud-logging
-google-cloud-bigquery==3.3.2
+google-cloud-bigquery>=3.3.2
     # via -r backend/requirements-controller.in
 google-cloud-bigquery-storage==2.14.2
     # via google-cloud-bigquery
