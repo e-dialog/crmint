@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
+#       http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,12 +28,23 @@ from controller import models
 blueprint = Blueprint('job', __name__)
 api = Api(blueprint)
 
-parser = reqparse.RequestParser()
-parser.add_argument('name')
-parser.add_argument('worker_class')
-parser.add_argument('pipeline_id')
-parser.add_argument('start_conditions', type=list, location='json')
-parser.add_argument('params', type=list, location='json')
+# --- START OF FIX ---
+
+# Create a parser *just* for the GET request
+# It only looks in the query string (location='args')
+get_parser = reqparse.RequestParser()
+get_parser.add_argument('pipeline_id', location='args', required=True)
+
+# Rename your original parser for POST and PUT methods
+post_put_parser = reqparse.RequestParser()
+post_put_parser.add_argument('name')
+post_put_parser.add_argument('worker_class')
+post_put_parser.add_argument('pipeline_id')
+post_put_parser.add_argument('start_conditions', type=list, location='json')
+post_put_parser.add_argument('params', type=list, location='json')
+
+# --- END OF FIX ---
+
 param_fields = {
     'id': fields.Integer,
     'name': fields.String,
@@ -100,7 +111,8 @@ class JobSingle(Resource):
           'message': 'Editing of job for active pipeline is unavailable'
       }, 422
 
-    args = parser.parse_args()
+    # Use the post_put_parser here
+    args = post_put_parser.parse_args()
 
     job.assign_attributes(args)
     job.save()
@@ -113,19 +125,21 @@ class JobList(Resource):
 
   @marshal_with(job_fields)
   def get(self):
-    args = parser.parse_args()
+    # Use the new get_parser here
+    args = get_parser.parse_args()
     pipeline = models.Pipeline.find(args['pipeline_id'])
     jobs = pipeline.jobs
     for job in jobs:
       job.updated_at = (
-        job.updated_at.isoformat() + 'Z'
-        if job.updated_at else None
+          job.updated_at.isoformat() + 'Z'
+          if job.updated_at else None
       )
     return jobs
 
   @marshal_with(job_fields)
   def post(self):
-    args = parser.parse_args()
+    # Use the post_put_parser here
+    args = post_put_parser.parse_args()
     pipeline = models.Pipeline.find(args['pipeline_id'])
 
     if pipeline.is_blocked():
